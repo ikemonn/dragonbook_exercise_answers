@@ -28,3 +28,17 @@
   - expr -> expr + term | expr - term | term
     term -> term * factor | term / factor | factor
     factor -> id | digit | (expr)
+
+
+## 2.3.1
+expr -> {print('+')} expr1 + term | {print('-')} expr1 - term | term
+term -> {print('\*')} term1 \* factor | {print('/')} term1 / factor | factor
+factor -> digit {print('digit')}| (expr)
+
+## 2.3.2
+expr ->
+  expr {print('+')} expr +
+  | expr {print('-')} expr -
+  | {print('(')} expr {print(')\*(')} expr {print(')')} \*
+  | {print('(')} expr {print(')/(')} expr {print(')')} /
+  | digit {print('digit')}
