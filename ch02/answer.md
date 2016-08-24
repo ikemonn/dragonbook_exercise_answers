@@ -42,3 +42,61 @@ expr ->
   | {print('(')} expr {print(')\*(')} expr {print(')')} \*
   | {print('(')} expr {print(')/(')} expr {print(')')} /
   | digit {print('digit')}
+
+## 2.4.1
+- a) S -> + S S | - S S | a
+```
+ void S() {
+   switch(lookahead) {
+    case '+':
+      match('+'); S(); S(); break;
+    case '-':
+     match('-'); S(); S(); break;
+    case a:
+      match(a); break;
+    default:
+      report('syntax error');
+   }
+ }
+ void match(terminal t) {
+   if (lookahead == t) lookahead = '次の終端記号';
+   else report('syntax error');
+ }
+```
+
+- b) S -> S (S) S | a
+```
+void S() {
+  switch(lookahead) {
+    case S:
+      S(); match('('); S(); match(')'); S(); break;
+    case a:
+      match(a); break;
+    default:
+      report('syntax error');
+  }
+}
+void match(terminal t) {
+  if (lookahead == t) lookahead = '次の終端記号';
+  else report('syntax error');
+}
+```
+
+- c) S -> 0 S 1 | 0 1
+
+```
+void S() {
+  switch(lookahead) {
+    case '0':
+      match('0'); S(); match('1');break;
+    case '1':
+      break;
+    default:
+      report('syntax error');
+  }
+}
+void match(terminal t) {
+  if (lookahead == t) lookahead = '次の終端記号';
+  else report('syntax error');
+}
+```
